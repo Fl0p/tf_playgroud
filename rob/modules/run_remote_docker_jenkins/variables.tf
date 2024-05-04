@@ -15,9 +15,3 @@ variable "remote_username" {
   description = "Username for SSH access to the remote host"
   default     = "admin"  # Optional: provide a default username if common
 }
-
-variable "remote_jenkins_home" {
-  type        = string
-  description = "jenkins working directory on the remote host"
-  default     = "~/jenkins_home" #Optional: provide a default jenkins home if common
-}

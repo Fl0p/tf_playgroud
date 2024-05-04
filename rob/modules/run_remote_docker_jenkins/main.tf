@@ -16,7 +16,7 @@ resource "docker_container" "jenkins" {
   name  = "jenkins"
   volumes {
     container_path = "/var/jenkins_home"
-    host_path = var.remote_jenkins_home
+    host_path = "/Users/${var.remote_username}/jenkins_home"
   }
   ports {
     internal = 8080
@@ -44,6 +44,7 @@ resource "null_resource" "read_jenkins_password" {
     }
 
     inline = [
+      "docker exec ${docker_container.jenkins.name} touch /var/jenkins_home/secrets/initialAdminPassword",
       "docker exec ${docker_container.jenkins.name} cat /var/jenkins_home/secrets/initialAdminPassword > /tmp/jenkins_admin_password"
     ]
 

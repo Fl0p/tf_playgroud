@@ -38,7 +38,6 @@ module "run_remote_docker_jenkins" {
   remote_host_ip = var.runner_ip
   remote_host_port = var.runner_port
   remote_username = var.runner_user
-  remote_jenkins_home = "/Users/rob/jenkins_home"
 }
 
 output "jenkins_admin_password" {
