@@ -2,10 +2,29 @@ terraform {
   required_providers {
     docker = {
       source  = "kreuzwerker/docker"
-      version = "~> 2.23.0"
+      version = "~> 3.0.2"
+    }
+    ngrok = {
+      source  = "ngrok/ngrok"
+      version = "~> 0.3.0"
     }
   }
 }
+
+
+module "create_yaml_file" {
+  source = "./modules/create_remote_yaml"
+  remote_host_ip = var.runner_ip
+  remote_host_port = var.runner_port
+  remote_username = var.runner_user
+  remote_file_path = "~/test_2.yml"
+  # Override only what's necessary, if anything
+}
+
+output "confirmation" {
+  value = "YAML file created successfully at ${module.create_yaml_file.remote_file_path}"
+}
+
 
 resource "null_resource" "default" {
   provisioner "local-exec" {
@@ -13,10 +32,19 @@ resource "null_resource" "default" {
   }
 }
 
+
+# Configure the ngrok provider
+provider "ngrok" {
+  api_key = var.ngrok_api_key
+}
+
+# resource "ngrok_reserved_domain" "example" {
+#   name = "myapp.exampledomain.com"
+#   region = "eu"
+# }
+
 provider "docker" {
-  # host = "unix:///var/run/docker.sock"
-  # host = "tcp://robMini:2376"
-  host = "ssh://rob@robMini:22"
+  host = "ssh://${var.runner_user}@${var.runner_ip}:${var.runner_port}"
   ssh_opts = [
     # "-o", "StrictHostKeyChecking=no",
     # "-o", "UserKnownHostsFile=/dev/null",
