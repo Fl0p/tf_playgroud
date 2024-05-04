@@ -11,12 +11,17 @@ resource "docker_image" "jenkins" {
   keep_locally = true
 }
 
+resource "docker_volume" "jenkins_volume" {
+  name = "${var.remote_username}_jenkins_volume"
+}
+
 resource "docker_container" "jenkins" {
   image = docker_image.jenkins.image_id
   name  = "jenkins"
   volumes {
     container_path = "/var/jenkins_home"
-    host_path = "/Users/${var.remote_username}/jenkins_home"
+    volume_name    = docker_volume.jenkins_volume.name
+    #host_path = "/Users/${var.remote_username}/jenkins_home"
   }
   ports {
     internal = 8080
