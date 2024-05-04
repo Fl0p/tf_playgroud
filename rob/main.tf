@@ -51,10 +51,6 @@ provider "docker" {
   ]
 }
 
-resource "docker_volume" "shared_volume1" {
-  name = "shared_volume1"
-}
-
 resource "docker_image" "jenkins" {
   name         = "jenkins/jenkins:lts"
   keep_locally = true
@@ -71,4 +67,40 @@ resource "docker_container" "jenkins" {
     internal = 8080
     external = 8080
   }
+}
+
+resource "null_resource" "read_jenkins_password" {
+  depends_on = [docker_container.jenkins]
+
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${docker_container.jenkins.name}"
+  }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = var.runner_user
+      host        = var.runner_ip
+      port        = var.runner_port
+    }
+
+    inline = [
+      "docker exec ${docker_container.jenkins.name} cat /var/jenkins_home/secrets/initialAdminPassword > /tmp/jenkins_admin_password"
+    ]
+
+  }
+
+  provisioner "local-exec" {
+    command = "scp -P ${var.runner_port} ${var.runner_user}@${var.runner_ip}:/tmp/jenkins_admin_password /tmp/jenkins_admin_password"
+  }
+
+}
+
+data "local_file" "jenkins_admin_password" {
+  filename = "/tmp/jenkins_admin_password"
+  depends_on = [null_resource.read_jenkins_password]
 }
