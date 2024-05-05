@@ -61,6 +61,7 @@ jobs:
       TF_VAR_runner_ip: ${{ secrets.RUNNER_IP }}
       TF_VAR_runner_port: ${{ secrets.RUNNER_PORT }}
       TF_VAR_runner_user: ${{ secrets.RUNNER_USER }}
+      TF_VAR_ngrok_api_key: ${{ secrets.NGROK_API_KEY }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
