@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     docker = {
-      source  = "kreuzwerker/docker"
+      source = "kreuzwerker/docker"
     }
   }
 }
@@ -42,10 +42,10 @@ resource "null_resource" "read_jenkins_password" {
 
   provisioner "remote-exec" {
     connection {
-      type        = "ssh"
-      user        = var.remote_username
-      host        = var.remote_host_ip
-      port        = var.remote_host_port
+      type = "ssh"
+      user = var.remote_username
+      host = var.remote_host_ip
+      port = var.remote_host_port
     }
 
     inline = [
@@ -62,6 +62,6 @@ resource "null_resource" "read_jenkins_password" {
 }
 
 data "local_file" "jenkins_admin_password" {
-  filename = "/tmp/jenkins_admin_password"
+  filename   = "/tmp/jenkins_admin_password"
   depends_on = [null_resource.read_jenkins_password]
 }

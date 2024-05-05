@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     docker = {
-      source  = "kreuzwerker/docker"
+      source = "kreuzwerker/docker"
     }
   }
 }
@@ -36,8 +36,8 @@ resource "docker_container" "postgres" {
     external = 5432
   }
   env = [
-      "POSTGRES_USER=sonar",
-      "POSTGRES_PASSWORD=sonar"
+    "POSTGRES_USER=sonar",
+    "POSTGRES_PASSWORD=sonar"
   ]
   restart = "on-failure"
 }

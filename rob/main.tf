@@ -12,15 +12,15 @@ terraform {
 }
 
 provider "docker" {
-  host = "ssh://${var.runner_user}@${var.runner_ip }:${var.runner_port}"
+  host     = "ssh://${var.runner_user}@${var.runner_ip}:${var.runner_port}"
   ssh_opts = []
 }
 
 module "create_yaml_file" {
-  source = "./modules/create_remote_yaml"
-  remote_host_ip = var.runner_ip
+  source           = "./modules/create_remote_yaml"
+  remote_host_ip   = var.runner_ip
   remote_host_port = var.runner_port
-  remote_username = var.runner_user
+  remote_username  = var.runner_user
   remote_file_path = "~/ngrok.yml"
   # Override only what's necessary, if anything
 }
@@ -35,9 +35,9 @@ module "run_remote_docker_jenkins" {
   providers = {
     docker = docker
   }
-  remote_host_ip = var.runner_ip
+  remote_host_ip   = var.runner_ip
   remote_host_port = var.runner_port
-  remote_username = var.runner_user
+  remote_username  = var.runner_user
 }
 
 output "jenkins_admin_password" {
@@ -46,10 +46,10 @@ output "jenkins_admin_password" {
 
 
 module "run_remote_docker_sonarqube" {
-  source = "./modules/run_remote_docker_sonarqube"
-  remote_host_ip = var.runner_ip
+  source           = "./modules/run_remote_docker_sonarqube"
+  remote_host_ip   = var.runner_ip
   remote_host_port = var.runner_port
-  remote_username = var.runner_user
+  remote_username  = var.runner_user
 }
 
 resource "null_resource" "default" {
