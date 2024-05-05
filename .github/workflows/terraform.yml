@@ -83,7 +83,7 @@ jobs:
         pwd
         ls -la
         ssh-add -L
-        ssh -v -p $TF_VAR_runner_port $TF_VAR_runner_user@$TF_VAR_runner_ip "exit"
+        ssh -o StrictHostKeyChecking=no -v -p $TF_VAR_runner_port $TF_VAR_runner_user@$TF_VAR_runner_ip "exit"
         echo $TF_VAR_runner_ip
         echo $RUNNER_IP
         echo "---"
