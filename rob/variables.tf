@@ -3,7 +3,6 @@ variable "ngrok_api_key" {
   description = "ngrok API Key"
 }
 
-
 variable "runner_ip" {
   type        = string
   description = "Main runner IP address"

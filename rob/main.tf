@@ -1,4 +1,17 @@
 terraform {
+  backend "s3" {
+    endpoint                    = "fra1.digitaloceanspaces.com"
+    bucket                      = "robtfstate"
+    key                         = "rob/terraform.tfstate"
+    region                      = "eu-central-1"
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    skip_region_validation      = true
+    force_path_style            = true
+  }
+  # backend "local" {
+  #   path = ".tfstate/terraform.tfstate"
+  # }
   required_providers {
     docker = {
       source  = "kreuzwerker/docker"
