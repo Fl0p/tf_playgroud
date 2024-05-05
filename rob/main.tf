@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    endpoint                    = "fra1.digitaloceanspaces.com"
+    endpoint                    = "https://robtfstate.fra1.digitaloceanspaces.com"
     bucket                      = "robtfstate"
     key                         = "rob/terraform.tfstate"
     region                      = "eu-central-1"
