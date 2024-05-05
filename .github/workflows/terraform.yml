@@ -62,6 +62,8 @@ jobs:
       TF_VAR_runner_port: ${{ secrets.RUNNER_PORT }}
       TF_VAR_runner_user: ${{ secrets.RUNNER_USER }}
       TF_VAR_ngrok_api_key: ${{ secrets.NGROK_API_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
