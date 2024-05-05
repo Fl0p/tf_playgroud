@@ -61,6 +61,7 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
+        working-directory: rob
         shell: bash
 
     steps:
@@ -70,10 +71,6 @@ jobs:
 
     - name: Configure rob
       run: |
-        echo "export TF_VAR_runner_ip=${{ secrets.runner_ip }}" >> $GITHUB_ENV
-        echo "export TF_VAR_runner_port=${{ secrets.runner_port }}" >> $GITHUB_ENV
-        echo "export TF_VAR_runner_user=${{ secrets.runner_user }}" >> $GITHUB_ENV
-        cd rob
         pwd
         ls -la
         echo $TF_VAR_runner_ip
