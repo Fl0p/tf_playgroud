@@ -36,10 +36,6 @@ resource "null_resource" "read_jenkins_password" {
     always_run = "${timestamp()}"
   }
 
-  provisioner "local-exec" {
-    command = "echo ${docker_container.jenkins.name}"
-  }
-
   provisioner "remote-exec" {
     connection {
       type = "ssh"
@@ -49,6 +45,7 @@ resource "null_resource" "read_jenkins_password" {
     }
 
     inline = [
+      "sleep 5",
       "docker exec ${docker_container.jenkins.name} touch /var/jenkins_home/secrets/initialAdminPassword",
       "docker exec ${docker_container.jenkins.name} cat /var/jenkins_home/secrets/initialAdminPassword > /tmp/jenkins_admin_password"
     ]
