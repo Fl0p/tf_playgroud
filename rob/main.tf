@@ -1,22 +1,23 @@
 terraform {
   required_version = "~> 1.8"
-  # backend "s3" {
-  #   endpoints = {
-  #     s3 = "https://fra1.digitaloceanspaces.com"
-  #   }                    
-  #   bucket                      = "robtfstate"
-  #   key                         = "rob/terraform.tfstate"
-  #   region                      = "eu-central-1"
-  #   workspace_key_prefix        = "rob"
-  #   skip_credentials_validation = true
-  #   skip_requesting_account_id  = true
-  #   skip_metadata_api_check     = true
-  #   skip_region_validation      = true
-  #   use_path_style              = true
-  # }
-  backend "local" {
-    path = ".tfstate/terraform.tfstate"
+  backend "s3" {
+    endpoints = {
+      s3 = "https://fra1.digitaloceanspaces.com"
+    }
+    bucket                      = "tfplayground"
+    key                         = "rob/terraform.tfstate"
+    region                      = "eu-central-1"
+    workspace_key_prefix        = "rob"
+    skip_credentials_validation = true
+    skip_requesting_account_id  = true
+    skip_metadata_api_check     = true
+    skip_region_validation      = true
+    skip_s3_checksum            = true
+    use_path_style              = true
   }
+  # backend "local" {
+  #   path = ".tfstate/terraform.tfstate"
+  # }
   required_providers {
     docker = {
       source  = "kreuzwerker/docker"
