@@ -32,7 +32,10 @@ terraform {
 
 provider "docker" {
   host     = "ssh://${var.runner_user}@${var.runner_ip}:${var.runner_port}"
-  ssh_opts = []
+  ssh_opts = [
+    "-o", "StrictHostKeyChecking=no",
+    "-o", "UserKnownHostsFile=/dev/null",
+  ]
 }
 
 module "create_yaml_file" {
