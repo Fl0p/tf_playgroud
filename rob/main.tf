@@ -21,7 +21,7 @@ module "create_yaml_file" {
   remote_host_ip = var.runner_ip
   remote_host_port = var.runner_port
   remote_username = var.runner_user
-  remote_file_path = "~/test_2.yml"
+  remote_file_path = "~/ngrok.yml"
   # Override only what's necessary, if anything
 }
 

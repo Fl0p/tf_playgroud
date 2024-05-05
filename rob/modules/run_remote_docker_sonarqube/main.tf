@@ -10,7 +10,6 @@ terraform {
 resource "docker_volume" "postgres" {
   name = "postgres"
 }
-
 resource "docker_volume" "postgres_data" {
   name = "postgres_data"
 }
@@ -43,14 +42,13 @@ resource "docker_container" "postgres" {
   restart = "on-failure"
 }
 
+#sonarqube
 resource "docker_volume" "sonarqube_data" {
   name = "${var.remote_username}_sonarqube_data"
 }
-
 resource "docker_volume" "sonarqube_logs" {
   name = "${var.remote_username}_sonarqube_logs"
 }
-
 resource "docker_volume" "sonarqube_extensions" {
   name = "${var.remote_username}_sonarqube_extensions"
 }
@@ -70,6 +68,7 @@ resource "docker_container" "sonarqube" {
   volumes {
     container_path = "/opt/sonarqube/logs"
     volume_name    = docker_volume.sonarqube_logs.name
+    #host_path = "/Users/${var.remote_username}/sonarqube/logs"
   }
   volumes {
     container_path = "/opt/sonarqube/extensions"
@@ -80,9 +79,9 @@ resource "docker_container" "sonarqube" {
     external = 9000
   }
   env = [
-    "SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/sonar",
-    "SONARQUBE_JDBC_USERNAME=sonar",
-    "SONARQUBE_JDBC_PASSWORD=sonar"
+    "SONAR_JDBC_URL=jdbc:postgresql://host.docker.internal:5432/sonar",
+    "SONAR_JDBC_USERNAME=sonar",
+    "SONAR_JDBC_PASSWORD=sonar"
   ]
 }
 
